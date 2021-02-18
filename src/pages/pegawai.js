@@ -89,9 +89,13 @@ class Pegawai extends React.Component {
           })
     }
     getPegawai = () => {
+        const token = localStorage.getItem("token");
         let url = "http://localhost:2000/pegawai";
         // mengakses api untuk mengambil data pegawai
-        axios.get(url, this.headerConfig())
+        axios
+        .get(url, {
+            headers: { Authorization: `Bearer ${token}`},
+    })
         .then(response => {
           // mengisikan data dari respon API ke array pegawai
           this.setState({pegawai: response.data.pegawai});
