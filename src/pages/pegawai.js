@@ -1,19 +1,36 @@
 import React from 'react'
 import axios from 'axios'
+import Navbar from '../components/navbar'
 import {Button, Modal, Table, Card, Form} from 'react-bootstrap'
 
 class Pegawai extends React.Component {
     constructor() {  
         super();  
         this.state = {  
+            token:"",
             pegawai: [],
             id_pegawai: "",
             nama_pegawai: "",
             alamat: "",
+            search: "",
             action: "insert",         
             isModalOpen: false
-        }  
+        } 
+        if (localStorage.getItem("token")) {
+            this.state.token = localStorage.getItem("token")
+        } else {
+            window.location = "/login"
+        }
+
+        this.headerConfig.bind(this) 
     }
+    headerConfig = () => {
+        let header = {
+            headers: { Authorization: `Bearer ${this.state.token}` }
+        }
+        return header
+    }
+
     bind = (event) => {
         this.setState({[event.target.name]: event.target.value});
     }
@@ -72,9 +89,13 @@ class Pegawai extends React.Component {
           })
     }
     getPegawai = () => {
+        const token = localStorage.getItem("token");
         let url = "http://localhost:2000/pegawai";
         // mengakses api untuk mengambil data pegawai
-        axios.get(url)
+        axios
+        .get(url, {
+            headers: { Authorization: `Bearer ${token}`},
+    })
         .then(response => {
           // mengisikan data dari respon API ke array pegawai
           this.setState({pegawai: response.data.pegawai});
@@ -103,6 +124,7 @@ class Pegawai extends React.Component {
           });
         }
     }
+
     Drop = (id_pegawai) => {
         let url = "http://localhost:2000/pegawai/" + id_pegawai;
         // memanggil url API untuk menghapus data pada database
@@ -123,11 +145,10 @@ class Pegawai extends React.Component {
         this.getPegawai()
     }
     render(){
-        console.log(this.state.id_pegawai)
-        console.log(this.state.nama_pegawai)
-        console.log(this.state.alamat)
+        console.log(this.state.pegawai)
         return(
             <>
+            <Navbar />
                 <Card>
                 <Card.Header className="card-header bg-info text-white" align={'center'}>Data Pegawai</Card.Header>
                 <Card.Body>
