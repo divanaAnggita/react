@@ -1,6 +1,6 @@
 import React from 'react'
-import axios from 'axios'
-import NavBar from '../components/navbar'
+import axios from "axios";
+import NavBar from "../components/navbar";
 
 class Home extends React.Component{
     constructor(){
@@ -15,21 +15,18 @@ class Home extends React.Component{
         } else {
             window.location = "/login"
         }
-        this.headerConfig.bind(this)
+        this.headerConfig.bind(this) 
     }
-
     headerConfig = () => {
         let header = {
             headers: { Authorization: `Bearer ${this.state.token}` }
         }
         return header
     }
-
     getUser = () => {
         let user = JSON.parse(localStorage.getItem('user'))
         this.setState({userName: user[0].username})
     }
-
     getPegawai = () => {
         let url = "http://localhost:2000/pegawai";
         // mengakses api untuk mengambil data pegawai
@@ -42,16 +39,14 @@ class Home extends React.Component{
           console.log(error);
         });
     }
-
     componentDidMount(){
         this.getUser()
         this.getPegawai()
     }
-
     render(){
         return(
             <div>
-                <NavBar />
+                <NavBar/>
                 <div className="container mt-2">
                     <h3 className="my-2">
                         <strong>Welcome back, {this.state.userName}</strong>
