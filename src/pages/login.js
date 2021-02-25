@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import {Link} from 'react-router-dom'
 import {Card, Form, Button, Container} from 'react-bootstrap'
 
 class Login extends React.Component {
@@ -63,7 +64,10 @@ class Login extends React.Component {
                             autoComplete="false" />
                         </Form.Group>
                     </Card.Text>
-                    <Button variant="primary" type="submit">Submit</Button>
+                    <Button variant="outline-success" type="submit">Submit</Button>
+                        <Link to="/register">
+                            <Button variant="outline-warning">Register</Button>
+                        </Link>
                     </Form>
                 </Card.Body>
                 </Card>
