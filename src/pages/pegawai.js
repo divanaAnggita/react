@@ -58,9 +58,10 @@ class Pegawai extends React.Component {
             isModalOpen: false
         })
     }
+    
     handleSave = (event) => {
         event.preventDefault();
-        /* menampung data id, nama dan alamat dari Form
+        /* menampung data nid, nama dan alamat dari Form
         ke dalam FormData() untuk dikirim  */
         let url = "";
         if (this.state.action === "insert") {
@@ -73,21 +74,17 @@ class Pegawai extends React.Component {
             nama_pegawai: this.state.nama_pegawai,
             alamat: this.state.alamat
           }
-      
           // mengirim data ke API untuk disimpan pada database
-          axios.post(url, form)
+          axios.post(url, form, this.headerConfig())
           .then(response => {
-            // jika proses simpan berhasil, memanggil data yang terbaru
-            this.getPegawai();
+          // jika proses simpan berhasil, memanggil data yang terbaru
+          this.getPegawai();
           })
-          .catch(error => {
-            console.log(error);
-          });
-          // menutup form modal
           this.setState({
-              isModalOpen: false
-          })
+            isModalOpen: false
+        })
     }
+
     getPegawai = () => {
         const token = localStorage.getItem("token");
         let url = "http://localhost:2000/pegawai";
